@@ -33,8 +33,8 @@ public class Smile {
             temp = S.getNumericCellValue();
             temp_P = P.getNumericCellValue();
            // System.out.println(temp + " " + temp_P);
-            min_hight = 0;
-            for (int i = 5000; i <=20000; i+=10){
+            min_hight = 10;
+            for (int i = 10; i <=20000; i+=10){
                 hight = EARTH+i;
                 tetta = Math.acos(EARTH/hight)-ALFA;
             //    System.out.println(Math.cos(tetta));
@@ -45,7 +45,7 @@ public class Smile {
            //     System.out.println(i + " " + tetta*180/Math.PI);
                 C1 = Math.acos(Math.cos(tetta) * Math.cos(Math.PI * temp));
                 C2 = Math.acos(Math.cos(tetta) * Math.cos(2 * Math.PI * temp));
-                if((temp_P*(C1+C2))>=(Math.PI)){
+                if((temp_P*(C1+C2))>(2*Math.PI)){
                   //  System.out.println(tetta + " " + C2 + " " + hight);
                     min_hight = i;
                     break;
