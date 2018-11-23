@@ -20,7 +20,7 @@ public class Smile {
         double C1;
         double C2;
         double min_hight;
-        double temp;
+        double temp_S;
         double temp_P;
       HSSFWorkbook wb = readWorkbook("src/main/smile.xls");
       HSSFSheet sheet = wb.getSheetAt(0);
@@ -30,7 +30,7 @@ public class Smile {
             HSSFRow row = (HSSFRow) rowIter.next();
             HSSFCell P = row.getCell(1);
             HSSFCell S = row.getCell(2);
-            temp = S.getNumericCellValue();
+            temp_S = S.getNumericCellValue();
             temp_P = P.getNumericCellValue();
            // System.out.println(temp + " " + temp_P);
             min_hight = 10;
@@ -43,8 +43,8 @@ public class Smile {
           //     System.out.println(2*Math.cos(1/2*(tetta + 2* Math.PI))*Math.cos(1/2*(tetta -  Math.PI)));
            //     System.out.println();
            //     System.out.println(i + " " + tetta*180/Math.PI);
-                C1 = Math.acos(Math.cos(tetta) * Math.cos(Math.PI * temp));
-                C2 = Math.acos(Math.cos(tetta) * Math.cos(2 * Math.PI * temp));
+                C1 = Math.acos(Math.cos(tetta) * Math.cos(Math.PI * temp_S));
+                C2 = Math.acos(Math.cos(tetta) * Math.cos(2 * Math.PI * temp_S));
                 if((temp_P*(C1+C2))>(2*Math.PI)){
                   //  System.out.println(tetta + " " + C2 + " " + hight);
                     min_hight = i;
@@ -53,7 +53,7 @@ public class Smile {
             }
 
          tetta = Math.acos(EARTH/(EARTH + min_hight))-ALFA;
-         C2 = Math.acos(Math.cos(tetta) * Math.cos(2 * temp * Math.PI));
+         C2 = Math.acos(Math.cos(tetta) * Math.cos(2 * temp_S * Math.PI));
          row.createCell(3).setCellValue(tetta);
          row.createCell(4).setCellValue(C2);
          row.createCell(5).setCellValue(min_hight);
@@ -83,19 +83,6 @@ public class Smile {
         }
         catch (Exception e) {
             System.out.println("Не удалось записать файл"); //Обработка ошибки
-        }
-    }
-    class Surface{
-        public double hight;
-        public double tetta;
-        public double C1;
-        public double C2;
-
-        public Surface(double hight, double tetta, double c1, double c2) {
-            this.hight = hight;
-            this.tetta = tetta;
-            this.C1 = c1;
-            this.C2 = c2;
         }
     }
 }
