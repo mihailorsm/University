@@ -36,15 +36,15 @@ public class Smile {
             min_hight = 10;
             for (int i = 10; i <=20000; i+=10){
                 hight = EARTH+i;
-                tetta = Math.acos(EARTH/hight)-ALFA;
+                tetta = Math.acos(EARTH/hight);
             //    System.out.println(Math.cos(tetta));
             //    System.out.println(Math.cos(temp_mod * Math.PI));
            //     System.out.println(Math.cos(tetta)+Math.cos(temp_mod * Math.PI));
-          //     System.out.println(2*Math.cos(1/2*(tetta + 2* Math.PI))*Math.cos(1/2*(tetta -  Math.PI)));
+           //     System.out.println(2*Math.cos(1/2*(tetta + 2* Math.PI))*Math.cos(1/2*(tetta -  Math.PI)));
            //     System.out.println();
            //     System.out.println(i + " " + tetta*180/Math.PI);
-                C1 = Math.acos(Math.cos(tetta) * Math.cos(Math.PI * temp_S));
-                C2 = Math.acos(Math.cos(tetta) * Math.cos(2 * Math.PI * temp_S));
+                C1 = Math.acos(Math.cos(tetta)/Math.cos(Math.PI / temp_S));
+                C2 = Math.acos(Math.cos(tetta)/Math.cos(2*Math.PI));
                 if((temp_P*(C1+C2))>(2*Math.PI)){
                   //  System.out.println(tetta + " " + C2 + " " + hight);
                     min_hight = i;
@@ -52,9 +52,9 @@ public class Smile {
                 }
             }
 
-         tetta = Math.acos(EARTH/(EARTH + min_hight))-ALFA;
-         C2 = Math.acos(Math.cos(tetta) * Math.cos(2 * temp_S * Math.PI));
-         row.createCell(3).setCellValue(tetta);
+         tetta = Math.acos(EARTH/(EARTH + min_hight));
+         C2 = Math.acos(Math.cos(tetta) / Math.cos(2 * temp_S / Math.PI));
+         row.createCell(3).setCellValue(Math.toDegrees(tetta));
          row.createCell(4).setCellValue(C2);
          row.createCell(5).setCellValue(min_hight);
 
