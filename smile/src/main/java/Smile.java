@@ -13,9 +13,9 @@ public class Smile {
 
     private static final double ALFA = 0.174533;
     private static final double EARTH = 6371;
+    private static final double FI = Math.toRadians(30);
 
     public static void main(String[] args) {
-        double hight;
         double tetta;
         double C1;
         double C2;
@@ -32,31 +32,35 @@ public class Smile {
             HSSFCell S = row.getCell(2);
             temp_S = S.getNumericCellValue();
             temp_P = P.getNumericCellValue();
-           // System.out.println(temp + " " + temp_P);
-            min_hight = 10;
-            for (int i = 10; i <=20000; i+=10){
-                hight = EARTH+i;
-                tetta = Math.acos(EARTH/hight);
+           // System.out.println(temp_S + " " + temp_P);
+          //  min_hight = 3000;
+            for (double hight = 0; hight <=50000; hight+=10){
+                tetta =Math.acos(Math.cos(ALFA)/(1+(hight/EARTH))) - ALFA;
             //    System.out.println(Math.cos(tetta));
             //    System.out.println(Math.cos(temp_mod * Math.PI));
            //     System.out.println(Math.cos(tetta)+Math.cos(temp_mod * Math.PI));
            //     System.out.println(2*Math.cos(1/2*(tetta + 2* Math.PI))*Math.cos(1/2*(tetta -  Math.PI)));
            //     System.out.println();
            //     System.out.println(i + " " + tetta*180/Math.PI);
-                C1 = Math.acos(Math.cos(tetta)/Math.cos(Math.PI / temp_S));
+                C1 = Math.acos(Math.cos(tetta)/Math.cos(Math.PI/temp_S));
                 C2 = Math.acos(Math.cos(tetta)/Math.cos(2*Math.PI));
-                if((temp_P*(C1+C2))>(2*Math.PI)){
+               // if((temp_P*(C1+C2))>=(2*Math.PI)){
+                if (temp_P*(Math.asin(C1/Math.cos(FI))+Math.asin(C2/Math.cos(FI)))>=(2*Math.PI)){
                   //  System.out.println(tetta + " " + C2 + " " + hight);
-                    min_hight = i;
+                    row.createCell(3).setCellValue(Math.toDegrees(tetta));
+                    row.createCell(4).setCellValue(C2);
+                    row.createCell(5).setCellValue(hight);
+
+                   // min_hight = hight;
                     break;
                 }
             }
 
-         tetta = Math.acos(EARTH/(EARTH + min_hight));
-         C2 = Math.acos(Math.cos(tetta) / Math.cos(2 * temp_S / Math.PI));
-         row.createCell(3).setCellValue(Math.toDegrees(tetta));
-         row.createCell(4).setCellValue(C2);
-         row.createCell(5).setCellValue(min_hight);
+       //  tetta = Math.acos(EARTH/(EARTH + min_hight));
+      //   C2 = Math.acos(Math.cos(tetta) / Math.cos(2 * temp_S / Math.PI));
+      //   row.createCell(3).setCellValue(Math.toDegrees(tetta));
+     //    row.createCell(4).setCellValue(C2);
+     //    row.createCell(5).setCellValue(min_hight);
 
         }
         writeWorkbook(wb,"src/main/smile_final.xls");
